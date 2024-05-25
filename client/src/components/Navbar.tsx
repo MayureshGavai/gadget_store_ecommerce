@@ -1,23 +1,14 @@
-import React from "react";
-import Header from "./Header";
+import React from 'react'
+import Header from './Header'
+import { Link } from 'react-router-dom'
 import storeImg from "../assets/gadget_store.png";
-import { IoIosSearch } from "react-icons/io";
-import { PiShoppingCart } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import { IoIosSearch } from 'react-icons/io';
+import { PiShoppingCart } from 'react-icons/pi';
 
-const Navbar = () => {
-  // const productCategories = [
-  //   "accessories",
-  //   "audio",
-  //   "cameras",
-  //   "computers",
-  //   "home & kitchen",
-  //   "gaming",
-  //   "mobiles & tablets",
-  //   "personal care",
-  //   "televisions",
-  // ];
-  const productCategories = [
+
+type Props = {}
+
+const productCategories:string[] = [
     "tv",
     "audio",
     "laptop",
@@ -26,6 +17,7 @@ const Navbar = () => {
     "appliances"
   ]
 
+const Navbar = (props: Props) => {
   return (
     <div className="font-Archivo ">
       <Header />
@@ -62,12 +54,12 @@ const Navbar = () => {
             </button>
           </div>
           <div className="hidden md:flex items-center justify-between gap-6">
-            <div className="relative flex items-center justify-center hover:rounded-full p-2 ">
+            <Link to="/cart" className="relative flex items-center justify-center hover:rounded-full p-2 ">
               <PiShoppingCart className="text-3xl cursor-pointer text-black " />
               <span className="absolute top-[-3px] right-[-3px] bg-black rounded-full px-2 py-1 text-xs text-white">
                 10
               </span>
-            </div>
+            </Link>
 
             <div>
               <button className="px-4 py-2 text-base text-white bg-black rounded-lg">
@@ -83,7 +75,7 @@ const Navbar = () => {
             <Link
               key={idx}
               to={`/categories/${category}`}
-              className="text-sm capitalize hover:underline hover:underline-offset-4"
+              className="text-sm capitalize hover:font-semibold"
             >
               {category}
             </Link>
@@ -91,7 +83,7 @@ const Navbar = () => {
         })}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

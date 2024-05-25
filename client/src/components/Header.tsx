@@ -1,8 +1,10 @@
-import React from "react";
-import { FaFacebookSquare } from "react-icons/fa";
-import { RiInstagramFill } from "react-icons/ri";
+import React from 'react'
+import { FaFacebookSquare } from 'react-icons/fa'
+import { RiInstagramFill } from 'react-icons/ri'
 
-const Header = () => {
+type Props = {}
+
+const Header = (props: Props) => {
   return (
     <div className="mt-0 w-full lg:px-20 py-3 flex justify-center  lg:justify-between items-center text-sm font-semibold bg-black text-white font-Archivo">
       <div className="hidden lg:block">
@@ -26,7 +28,7 @@ const Header = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

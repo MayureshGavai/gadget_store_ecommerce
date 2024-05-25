@@ -1,20 +1,23 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from 'react'
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { SlArrowDown } from "react-icons/sl";
-import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Disclosure, Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import { LuListFilter } from "react-icons/lu";
+import { Product } from '../types';
 
 
-const ProductCategory = () => {
-  const [productList, setProductList] = useState([]);
-  const [brands, setBrands] = useState([]);
-  const { categoryName } = useParams();
-  const [showFilters, setShowFilters] = useState(false);
-  const [selectedBrands, setSelectedBrands] = useState([]);
-  const [priceRange, setPriceRange] = useState([0,100000])
-  const [sortBy, setSortBy] = useState(null)
+type Props = {}
+
+const ProductCategory = (props: Props) => {
+  const [productList, setProductList] = useState<Product[]>([]);
+  const [brands, setBrands] = useState<string[]>([]);
+  const { categoryName } = useParams<{ categoryName: string }>();
+  const [showFilters, setShowFilters] = useState<boolean>(false);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
+  const [sortBy, setSortBy] = useState<string | null>(null);
 
   const toggleFilters = () => {
     setShowFilters(!showFilters);
@@ -24,9 +27,9 @@ const ProductCategory = () => {
     const res = await axios(
       `https://fakestoreapi.in/api/products/category?type=${categoryName}`
     );
-    const { products } = await res.data;
+    const products: Product[] = await res.data.products;  
     setProductList(products);
-    const uniqueBrands = [...new Set(products.map(product => product.brand))];
+    const uniqueBrands : string[] = [...new Set(products.map((product: Product) => product.brand))];
     setBrands(uniqueBrands);
   };
 
@@ -34,7 +37,7 @@ const ProductCategory = () => {
     fetchData();
   }, [categoryName]);
 
-  const handleBrandFilter = (brand) => {
+  const handleBrandFilter = (brand: string) => {
     const index = selectedBrands.indexOf(brand);
     if (index === -1) {
       setSelectedBrands([...selectedBrands, brand]);
@@ -43,15 +46,15 @@ const ProductCategory = () => {
     }
   };
 
-  const handlePriceRangeFilter = (e) => {
+  const handlePriceRangeFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPriceRange([parseInt(e.target.value), priceRange[1]]);
   };
   
-  const handleSortBy = (sortBy) => {
+  const handleSortBy = (sortBy: string) => {
     setSortBy(sortBy)
   }
 
-  const filteredProducts = productList.filter(product => {
+  const filteredProducts = productList.filter((product: Product) => {
     // Filter by selected brands
     if (selectedBrands.length > 0 && !selectedBrands.includes(product.brand)) {
       return false;
@@ -61,7 +64,7 @@ const ProductCategory = () => {
     return productPrice >= priceRange[0] && productPrice <= priceRange[1];
   });
 
-  const sortedProducts = filteredProducts.sort((a,b)=>{
+  const sortedProducts = filteredProducts.sort((a: Product, b: Product) => {
     switch(sortBy){
       case "lowToHigh" :
         return Number(a.price) - Number(b.price)
@@ -71,7 +74,6 @@ const ProductCategory = () => {
         return 0
     }
   })
-  
   return (
     <div>
       <Navbar />
@@ -93,10 +95,10 @@ const ProductCategory = () => {
             </button>
             <Menu as="div" className="relative inline-block text-left">
             <div>
-          <Menu.Button className="flex items-center gap-2 px-2 py-1 border border-black rounded-md hover:bg-black hover:text-white">
+          <MenuButton className="flex items-center gap-2 px-2 py-1 border border-black rounded-md hover:bg-black hover:text-white">
               Sort by
             <SlArrowDown/>
-          </Menu.Button>
+          </MenuButton>
         </div>
         <Transition
           as={Fragment}
@@ -107,9 +109,9 @@ const ProductCategory = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white border border-black shadow-lg ">
+          <MenuItems className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white border border-black shadow-lg ">
             <div className="px-1 py-1 font-Archivo text-base">
-              <Menu.Item>
+              <MenuItem>
                 {({ active }) => (
                   <button
                     onClick={()=>handleSortBy("lowToHigh")}
@@ -120,8 +122,8 @@ const ProductCategory = () => {
                     Low to High
                   </button>
                 )}
-              </Menu.Item>
-              <Menu.Item>
+              </MenuItem>
+              <MenuItem>
                 {({ active }) => (
                   <button
                     onClick={()=>handleSortBy("highToLow")}
@@ -132,10 +134,10 @@ const ProductCategory = () => {
                     High to Low
                   </button>
                 )}
-              </Menu.Item>
+              </MenuItem>
             </div>
             
-          </Menu.Items>
+          </MenuItems>
         </Transition>
             </Menu>
             
@@ -185,6 +187,7 @@ const ProductCategory = () => {
           <div className={`${showFilters ? 'grid grid-cols-4' : 'grid grid-cols-5'} w-full gap-5` }>
             {sortedProducts.map((product) => {
               return (
+              <Link key={product.id} to={`/products/${product.id}`}>
                 <div
                   key={product.id}
                   className="w-auto h-fit border px-2 my-2 rounded-lg"
@@ -204,15 +207,16 @@ const ProductCategory = () => {
                     <h1 className="text-2xl font-semibold">
                       ₹ {Number(product.price) * 80}{" "}
                     </h1>
-                  </div>
+                  </div>  
                 </div>
+                </Link>
               );
             })}
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductCategory;
+export default ProductCategory
