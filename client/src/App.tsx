@@ -1,13 +1,11 @@
-import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import Cart from './pages/Cart'
 import ProductCategory from './pages/ProductCategory'
 import ProductDetails from './pages/ProductDetails'
 
-type Props = {}
 
-const App = (props: Props) => {
+const App = () => {
   return (
     <div className='font-Archivo'>
       <BrowserRouter>

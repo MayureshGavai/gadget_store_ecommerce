@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -8,9 +8,8 @@ import { LuListFilter } from "react-icons/lu";
 import { Product } from '../types';
 
 
-type Props = {}
 
-const ProductCategory = (props: Props) => {
+const ProductCategory = () => {
   const [productList, setProductList] = useState<Product[]>([]);
   const [brands, setBrands] = useState<string[]>([]);
   const { categoryName } = useParams<{ categoryName: string }>();

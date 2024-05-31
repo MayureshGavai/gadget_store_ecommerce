@@ -1,11 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Product } from "../types";
 
-type Props = {};
 
-const Products = (props: Props) => {
+const Products = () => {
   const [productList, setProductList] = useState<Product[]>([]);
 
   const fetchData = async () => {

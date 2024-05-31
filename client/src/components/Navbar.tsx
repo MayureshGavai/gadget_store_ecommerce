@@ -1,4 +1,3 @@
-import React from 'react'
 import Header from './Header'
 import { Link } from 'react-router-dom'
 import storeImg from "../assets/gadget_store.png";
@@ -6,7 +5,6 @@ import { IoIosSearch } from 'react-icons/io';
 import { PiShoppingCart } from 'react-icons/pi';
 
 
-type Props = {}
 
 const productCategories:string[] = [
     "tv",
@@ -17,7 +15,7 @@ const productCategories:string[] = [
     "appliances"
   ]
 
-const Navbar = (props: Props) => {
+const Navbar = () => {
   return (
     <div className="font-Archivo ">
       <Header />

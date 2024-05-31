@@ -1,8 +1,6 @@
-import React from 'react'
 
-type Props = {}
 
-const Carousel = (props: Props) => {
+const Carousel = () => {
   return (
     <div className="px-14 py-5 w-full flex gap-4">
       <div className="w-4/6 h-96 border border-black">

@@ -1,10 +1,9 @@
-import React from 'react'
+
 import { FaFacebookSquare } from 'react-icons/fa'
 import { RiInstagramFill } from 'react-icons/ri'
 
-type Props = {}
 
-const Header = (props: Props) => {
+const Header = () => {
   return (
     <div className="mt-0 w-full lg:px-20 py-3 flex justify-center  lg:justify-between items-center text-sm font-semibold bg-black text-white font-Archivo">
       <div className="hidden lg:block">
